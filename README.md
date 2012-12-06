@@ -1,7 +1,7 @@
 OnlineStats
 ===========
 
-OnlineStats - the counter of visitors on your site.
+OnlineStats - the counter of visitors on your site. This is extension of Yii Framework.
 
 Installation
 -----
@@ -21,7 +21,7 @@ Execute next SQL query:
 
     ALTER TABLE <your_user_table> ADD last_activity INT(11) NOT NULL DEFAULT 0;
 
-protected/config/main.php (or another):
+This is protected/config/main.php (or another):
 
     <?php
     return array(
@@ -60,7 +60,7 @@ Now all visits is counting. For view info about them, use this functions:
 Example
 ---------
 
-full code of protected/components/Controller.php:
+Code of protected/components/Controller.php:
 
     <?php
     class Controller extends CController
