@@ -3,8 +3,14 @@ OnlineStats
 
 OnlineStats - the counter of visitors on your site.
 
-SQL
----
+Installation
+-----
+
+Download and unpack files to protected/extensions as this:
+
+    <your app>/protected/extensions/onlinestats/OnlineStats.php
+
+Execute next SQL query:
 
     CREATE TABLE IF NOT EXISTS onlinestats
     (
@@ -14,9 +20,6 @@ SQL
     );
 
     ALTER TABLE <your_user_table> ADD last_activity INT(11) NOT NULL DEFAULT 0;
-
-Code
-----
 
 protected/config/main.php (or another):
 
@@ -34,6 +37,8 @@ protected/config/main.php (or another):
     	// ...
     );
 
+Using
+----
 
 Insert in your code this for counting users (for example, to protected/components/Controller.php in "init" function and
 inherit all controllers by him):
