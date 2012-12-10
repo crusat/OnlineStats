@@ -2,7 +2,7 @@
 
 /*
 by Kuznecov Aleksey (crusat@crusat.ru)
-Version: 1.00
+Version: 1.01
 
 SQL:
 
@@ -172,5 +172,34 @@ class OnlineStats extends CApplicationComponent
         $command->execute();
         return true;
     }
-}
 
+    /*
+     * Visits
+     */
+    public function getVisits($minutes=5) {
+        $nowtime = time();
+        $lasttime = $nowtime - $minutes*60;
+        $sql = "SELECT COUNT(id) AS count_visits FROM $this->tablename_stats WHERE created_ts > $lasttime";
+        $rows = Yii::app()->db->createCommand()->setText($sql)->query();
+        $row = $rows->read();
+        $result = $row['count_visits'] ? $row['count_visits'] : 0;
+        return $result;
+    }
+
+    public function getVisitsToday($timezone=0) {
+        $nowtime = time();
+        $lasttime = $this->dayBeginTimestamp($nowtime, $timezone);
+        $sql = "SELECT COUNT(id) AS count_visits FROM $this->tablename_stats WHERE created_ts > $lasttime";
+        $rows = Yii::app()->db->createCommand()->setText($sql)->query();
+        $row = $rows->read();
+        $result = $row['count_visits'] ? $row['count_visits'] : 0;
+        return $result;
+    }
+
+    public function dayBeginTimestamp($need_timestamp, $timezone = 0) {
+        $t = floor((float)($need_timestamp + $timezone*3600) / 86400)*86400 + 1;
+        return $t;
+    }
+
+
+}

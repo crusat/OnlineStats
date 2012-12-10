@@ -56,7 +56,7 @@ Now all visits is counting. For view info about them, use this functions:
     $onlinestats->getOnlineUsers(); // current online users/sessions (for last 5 minutes)
     $onlinestats->getOnlineUsers(30); // current online users/sessions (for last 30 minutes)
 
-    // with params and other functions
+    // unique users visits
     $onlinestats->getOnlineUsers($minutes=5); // current online users/sessions (for last 5 minutes)
     $onlinestats->getOnlineUsersList($minutes=5); // array of online users - just "print_r" it.
     $onlinestats->getOnlineUsersPeriod($from=0, $to=0); // Online users - from and to params
@@ -64,6 +64,13 @@ Now all visits is counting. For view info about them, use this functions:
     $onlinestats->getActiveUsers($minutes=5, $created_ago=172800); // User, registered early than time()-$created_ago and online
     $onlinestats->getDAU(); // Daily Online Users
     $onlinestats->getMAU(); // Monthly Online Users
+
+    // all users visits
+    $onlinestats->getVisits($minutes=5); // visits for last 5 minutes
+    $onlinestats->getVisits(86400); // visits for last 24 hours
+    $onlinestats->getVisitsToday(4); // visits from begin of day with timezone GMT+4
+
+    // old records in database
     $onlinestats->removeHistory($seconds=604800); // remove old history - because your db is not trash :)
 
 Example
