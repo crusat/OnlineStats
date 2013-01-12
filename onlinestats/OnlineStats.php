@@ -61,10 +61,15 @@ class OnlineStats extends CApplicationComponent
         }
         // other info
         $nowtime = time();
-        //$sql = "INSERT INTO $this->tablename_stats (who, created_ts) VALUES ( '$who' , $nowtime )";
-        $sql = "INSERT INTO $this->tablename_stats ( user_ip, user_session, user_cookie, user_id, created_ts) VALUES ( '$user_ip', '$user_session', '$user_cookie', $user_id,  $nowtime )";
-        $command = Yii::app()->db->createCommand($sql);
-        $command->execute();
+        // if faster than 3 secs - ignore
+        $sql = "SELECT COUNT(DISTINCT user_cookie) AS cnt FROM $this->tablename_stats WHERE created_ts > ($nowtime - 3) AND (user_ip LIKE '$user_ip') AND (user_session LIKE '$user_session') AND (user_cookie LIKE '$user_cookie')";
+        $rows = Yii::app()->db->createCommand()->setText($sql)->query();
+        $row = $rows->read();
+        if ($row['cnt'] == 0) {
+            $sql = "INSERT INTO $this->tablename_stats ( user_ip, user_session, user_cookie, user_id, created_ts) VALUES ( '$user_ip', '$user_session', '$user_cookie', $user_id,  $nowtime )";
+            $command = Yii::app()->db->createCommand($sql);
+            $command->execute();
+        }
         return true;
     }
 
